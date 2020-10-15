@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+<script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet"/>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet"/>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" rel="stylesheet"/>
+<link href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css" rel="stylesheet"/>
+<style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+<style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+<meta content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<style>
+                #map_65be1248dff34d14a7d622a5841dd005 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+</head>
+<body>
+<form action="/my-link/" method="post">
+<input type="text" placeholder="start point" name="start_point">
+<input type="text" placeholder="end point" name="end_point">
+<input type="submit" value="Route" />
+<label>Райымбек батыра->Жибек Жолы->Алмалы->Абая</label>
+</form>
+<div class="folium-map" id="map_65be1248dff34d14a7d622a5841dd005"></div>
+</body>
+<script>    
+    
+            var map_65be1248dff34d14a7d622a5841dd005 = L.map(
+                "map_65be1248dff34d14a7d622a5841dd005",
+                {
+                    center: [43.25654, 76.92848],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 12,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_d0f376a0f8e349d69b63118a4f8e635d = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_65be1248dff34d14a7d622a5841dd005);
+        
+    
+            var circle_marker_f384363fc74f414da632aefd860daf5e = L.circleMarker(
+                [43.271201, 76.9448],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9, "stroke": true, "weight": 3}
+            ).addTo(map_65be1248dff34d14a7d622a5841dd005);
+        
+    
+        var popup_8bf60cfa808545aea26e648454037138 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d7f1b549a740457da52ae4ffad7c8562 = $(`<div id="html_d7f1b549a740457da52ae4ffad7c8562" style="width: 100.0%; height: 100.0%;">Райымбек батыра</div>`)[0];
+            popup_8bf60cfa808545aea26e648454037138.setContent(html_d7f1b549a740457da52ae4ffad7c8562);
+        
+
+        circle_marker_f384363fc74f414da632aefd860daf5e.bindPopup(popup_8bf60cfa808545aea26e648454037138)
+        ;
+
+        
+    
+    
+            var circle_marker_4d1a9d8adc894ca28df79fa3f0c16e84 = L.circleMarker(
+                [43.260199, 76.946103],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9, "stroke": true, "weight": 3}
+            ).addTo(map_65be1248dff34d14a7d622a5841dd005);
+        
+    
+        var popup_bd8428c2440745f9842f44a9d999b1d9 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e33f7791ade74350a21c46faa4b38ec2 = $(`<div id="html_e33f7791ade74350a21c46faa4b38ec2" style="width: 100.0%; height: 100.0%;">Жибек Жолы</div>`)[0];
+            popup_bd8428c2440745f9842f44a9d999b1d9.setContent(html_e33f7791ade74350a21c46faa4b38ec2);
+        
+
+        circle_marker_4d1a9d8adc894ca28df79fa3f0c16e84.bindPopup(popup_bd8428c2440745f9842f44a9d999b1d9)
+        ;
+
+        
+    
+    
+            var circle_marker_d0f3da25542d437599aa0c35068a6f28 = L.circleMarker(
+                [43.251295, 76.945456],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9, "stroke": true, "weight": 3}
+            ).addTo(map_65be1248dff34d14a7d622a5841dd005);
+        
+    
+        var popup_2553b2d7727c488793a8b687b8c3c2fc = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3361ec5e72ee405880770409cb588978 = $(`<div id="html_3361ec5e72ee405880770409cb588978" style="width: 100.0%; height: 100.0%;">Алмалы</div>`)[0];
+            popup_2553b2d7727c488793a8b687b8c3c2fc.setContent(html_3361ec5e72ee405880770409cb588978);
+        
+
+        circle_marker_d0f3da25542d437599aa0c35068a6f28.bindPopup(popup_2553b2d7727c488793a8b687b8c3c2fc)
+        ;
+
+        
+    
+    
+            var circle_marker_42c0918d4be347b9a89f9b068bf6f706 = L.circleMarker(
+                [43.242548, 76.949588],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9, "stroke": true, "weight": 3}
+            ).addTo(map_65be1248dff34d14a7d622a5841dd005);
+        
+    
+        var popup_5237ced7362e471e9364b794fef41c14 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_428e76fd170f484b9bd77f2c86f63c8d = $(`<div id="html_428e76fd170f484b9bd77f2c86f63c8d" style="width: 100.0%; height: 100.0%;">Абая</div>`)[0];
+            popup_5237ced7362e471e9364b794fef41c14.setContent(html_428e76fd170f484b9bd77f2c86f63c8d);
+        
+
+        circle_marker_42c0918d4be347b9a89f9b068bf6f706.bindPopup(popup_5237ced7362e471e9364b794fef41c14)
+        ;
+
+        
+    
+    
+            var circle_marker_ec284136ca304e4898dde3e232e234fa = L.circleMarker(
+                [43.240401, 76.927696],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9, "stroke": true, "weight": 3}
+            ).addTo(map_65be1248dff34d14a7d622a5841dd005);
+        
+    
+        var popup_c5f667f82f7742f7a52189f57cb65d55 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c81c4991948748ae948b283d052e907b = $(`<div id="html_c81c4991948748ae948b283d052e907b" style="width: 100.0%; height: 100.0%;">Байконур</div>`)[0];
+            popup_c5f667f82f7742f7a52189f57cb65d55.setContent(html_c81c4991948748ae948b283d052e907b);
+        
+
+        circle_marker_ec284136ca304e4898dde3e232e234fa.bindPopup(popup_c5f667f82f7742f7a52189f57cb65d55)
+        ;
+
+        
+    
+    
+            var circle_marker_70650999a641460f9b49e13ed8f61967 = L.circleMarker(
+                [43.240362, 76.917519],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9, "stroke": true, "weight": 3}
+            ).addTo(map_65be1248dff34d14a7d622a5841dd005);
+        
+    
+        var popup_1b0e81a55b0c4ac8b2442b8c31c04621 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6d170b48ca4447f98a69153ef0f4063b = $(`<div id="html_6d170b48ca4447f98a69153ef0f4063b" style="width: 100.0%; height: 100.0%;">Драмтеатр имени Ауэзова</div>`)[0];
+            popup_1b0e81a55b0c4ac8b2442b8c31c04621.setContent(html_6d170b48ca4447f98a69153ef0f4063b);
+        
+
+        circle_marker_70650999a641460f9b49e13ed8f61967.bindPopup(popup_1b0e81a55b0c4ac8b2442b8c31c04621)
+        ;
+
+        
+    
+    
+            var circle_marker_b8914f272e454a449d172679ac389c8a = L.circleMarker(
+                [43.239041, 76.897612],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9, "stroke": true, "weight": 3}
+            ).addTo(map_65be1248dff34d14a7d622a5841dd005);
+        
+    
+        var popup_0e0a79be873941c7a3873b8816dd200f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e00a12d16c7e4801b2d35d0c6c10bbd8 = $(`<div id="html_e00a12d16c7e4801b2d35d0c6c10bbd8" style="width: 100.0%; height: 100.0%;">Алатау</div>`)[0];
+            popup_0e0a79be873941c7a3873b8816dd200f.setContent(html_e00a12d16c7e4801b2d35d0c6c10bbd8);
+        
+
+        circle_marker_b8914f272e454a449d172679ac389c8a.bindPopup(popup_0e0a79be873941c7a3873b8816dd200f)
+        ;
+
+        
+    
+    
+            var circle_marker_57ca6cf522f54978b5c8d7ae8e715d3e = L.circleMarker(
+                [43.2362, 76.8764],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9, "stroke": true, "weight": 3}
+            ).addTo(map_65be1248dff34d14a7d622a5841dd005);
+        
+    
+        var popup_37b1400db6e542639df2534f35474786 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9e1f06d11f68403e89711b467dc36697 = $(`<div id="html_9e1f06d11f68403e89711b467dc36697" style="width: 100.0%; height: 100.0%;">Сайран</div>`)[0];
+            popup_37b1400db6e542639df2534f35474786.setContent(html_9e1f06d11f68403e89711b467dc36697);
+        
+
+        circle_marker_57ca6cf522f54978b5c8d7ae8e715d3e.bindPopup(popup_37b1400db6e542639df2534f35474786)
+        ;
+
+        
+    
+    
+            var circle_marker_728e3b2322474d3683e83acb1645dbea = L.circleMarker(
+                [43.23, 76.867],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9, "stroke": true, "weight": 3}
+            ).addTo(map_65be1248dff34d14a7d622a5841dd005);
+        
+    
+        var popup_2727aba7d4b247b9ab26bc198e560efd = L.popup({"maxWidth": "100%"});
+
+        
+            var html_90da6d0209754ad290a7e2a3e802b930 = $(`<div id="html_90da6d0209754ad290a7e2a3e802b930" style="width: 100.0%; height: 100.0%;">Москва</div>`)[0];
+            popup_2727aba7d4b247b9ab26bc198e560efd.setContent(html_90da6d0209754ad290a7e2a3e802b930);
+        
+
+        circle_marker_728e3b2322474d3683e83acb1645dbea.bindPopup(popup_2727aba7d4b247b9ab26bc198e560efd)
+        ;
+
+        
+    
+    
+            var color_line_cf8fa098454f44afaf1d08ad5433d468 = L.featureGroup(
+                {}
+            ).addTo(map_65be1248dff34d14a7d622a5841dd005);
+        
+    
+            var poly_line_31448356e7744839b605ff9edf45b1b2 = L.polyline(
+                [[[43.271201, 76.9448], [43.260199, 76.946103]]],
+                {"bubblingMouseEvents": true, "color": "#ff0000ff", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#ff0000ff", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(color_line_cf8fa098454f44afaf1d08ad5433d468);
+        
+    
+            var color_line_794ed0e3b82e4a58a80ad36bded78c31 = L.featureGroup(
+                {}
+            ).addTo(map_65be1248dff34d14a7d622a5841dd005);
+        
+    
+            var poly_line_48bf9f223c9f41f3b0d9cc0ceb91cf1a = L.polyline(
+                [[[43.260199, 76.946103], [43.251295, 76.945456]]],
+                {"bubblingMouseEvents": true, "color": "#ff0000ff", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#ff0000ff", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(color_line_794ed0e3b82e4a58a80ad36bded78c31);
+        
+    
+            var color_line_7a6dba7766c5462fadd4df0c676576ab = L.featureGroup(
+                {}
+            ).addTo(map_65be1248dff34d14a7d622a5841dd005);
+        
+    
+            var poly_line_2f02116167154f0fbbfc993f1b8547f6 = L.polyline(
+                [[[43.251295, 76.945456], [43.242548, 76.949588]]],
+                {"bubblingMouseEvents": true, "color": "#ff0000ff", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#ff0000ff", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(color_line_7a6dba7766c5462fadd4df0c676576ab);
+        
+</script>
