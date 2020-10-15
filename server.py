@@ -10,8 +10,9 @@ from idna import unicode
 import station
 import requests
 import bs4
-#import sys
-#reload(sys)
+from contextlib import closing
+import psycopg2
+from tkinter import *
 
 
 app = Flask(__name__)
@@ -120,13 +121,24 @@ def add_other_elements_on_page():
     with open('./templates/index.html') as inf:
         txt = inf.read()
         soup = bs4.BeautifulSoup(txt)
-
+    he1=soup.find_all("style")[2]
     he = soup.find("body")
     # <form action="/my-link/"><input type="submit" value="Click me" /></form>
 
     # he.insert(1,'<form action="/point_1/" method="post"><input type="text" placeholder="kk" name="point"></form>\n')
+    he1.append('form{display: inline;}')
     he.insert(1,
-              '<form action="/my-link/" method="post">\n<input type="text" placeholder="start point" name="start_point">\n<input type="text" placeholder="end point" name="end_point">\n<input type="submit" value="Route" />\n<label/>\n</form>\n')
+              '<form action="/my-link/" method="post">\n'
+              '<input type="text" placeholder="start point" name="start_point">'
+              '\n<input type="text" placeholder="end point" name="end_point">\n'
+              '<input type="submit" value="Route" />\n'
+              '</form>\n'
+              '<form action="/history/" method="post"> <input type="submit" value="history" /></form>\n'
+              '<form action="/favorite/" method="post"> <input type="submit" value="favorite" /></form>\n'
+              '<form action="/add_to_favorite/" method="post"> <input type="submit" value="add to favorite" /></form>\n')
+
+    he.insert(2,'<label/>\n')
+
 
     with open("./templates/index.html", "w") as outf:
         outf.write(str(soup))
@@ -152,7 +164,10 @@ def add_route_to_lbl(route):
 
     with open("./templates/index.html",encoding='utf-8') as f:
         file = f.read()
-        file = file.replace("<label/>", "<label>" + aa+ "</label>")
+        if aa=='':
+            file = file.replace("<label/>", "<label>" + aa + "</label>")
+        else:
+            file = file.replace("<label/>", "<p><label>" + aa+ "</label></p>")
     with open("./templates/index.html", "w",encoding='utf-8') as w:
         w.write(file)
 
@@ -180,6 +195,27 @@ def calc_route(start="", end=""):
         rez.append(all_stations[ind_1])
     return rez
 
+def get_data_from_db(id='1'):
+    """
+    con = psycopg2.connect(
+        database="metro2_0",
+        user="postgres",
+        password="3400430",
+        host="127.0.0.1",
+
+    )
+    """
+
+    rez = []
+    with closing(psycopg2.connect(dbname='metro2_0', user='postgres',
+                            password='3400430', host='127.0.0.1')) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT * FROM favorite where id='+id)
+            for row in cursor:
+                print(row)
+                rez.append(row)
+    return rez
+
 
 @app.route('/')
 def index(route=""):
@@ -190,6 +226,39 @@ def index(route=""):
     add_route_to_lbl(route)
     return render_template('index.html')
 
+@app.route('/history/', methods=['POST'])
+def show_history():
+    print()
+
+@app.route('/favorite/', methods=['POST'])
+def show_favorite():
+    print('favorite pressed')
+    data = get_data_from_db()
+    window = Tk()
+    window.title("Список избранных маршрутов")
+    window.geometry('400x250')
+    window.attributes("-topmost",True)
+
+    lbl = Label(window, text="начальная точка -> ")
+    lbl.grid(column=0, row=0)
+    lbl2 = Label(window, text="конечная точка")
+    lbl2.grid(column=1, row=0)
+    row=1
+
+    for i in data:
+        lbl3 = Label(window, text=i[1]+' -> ')
+        lbl4 = Label(window, text=i[2])
+        lbl3.grid(column=0, row=row)
+        lbl4.grid(column=1, row=row)
+        row+=1
+
+
+    window.mainloop()
+    return index()
+
+@app.route('/add_to_favorite/', methods=['POST'])
+def add_favorite():
+    print()
 
 @app.route('/my-link/', methods=['POST'])
 def my_link():
@@ -203,8 +272,9 @@ def my_link():
     draw_lines_by_points(map, route)
     add_other_elements_on_page()
     add_route_to_lbl(route)
-    
+
     return render_template('index.html')
+
 
 
 if __name__ == '__main__':
