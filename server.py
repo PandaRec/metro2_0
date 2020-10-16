@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -
+from enum import Enum
 from imp import reload
 
 from flask import Flask, render_template, request
@@ -13,11 +14,16 @@ import bs4
 from contextlib import closing
 import psycopg2
 from tkinter import *
+import sub_window
+import work_database
+
 
 
 app = Flask(__name__)
 
-
+class enum(Enum):
+    favorite = 1
+    history = 2
 
 def draw_map():
     """ draw start map"""
@@ -195,8 +201,9 @@ def calc_route(start="", end=""):
         rez.append(all_stations[ind_1])
     return rez
 
-def get_data_from_db(id='1'):
-    """
+"""
+def get_data_from_db(id='1',table_name=''):
+    
     con = psycopg2.connect(
         database="metro2_0",
         user="postgres",
@@ -204,18 +211,20 @@ def get_data_from_db(id='1'):
         host="127.0.0.1",
 
     )
-    """
+    
 
     rez = []
     with closing(psycopg2.connect(dbname='metro2_0', user='postgres',
                             password='3400430', host='127.0.0.1')) as conn:
         with conn.cursor() as cursor:
-            cursor.execute('SELECT * FROM favorite where id='+id)
+            cursor.execute('SELECT * FROM table_name where id='+id)
             for row in cursor:
                 print(row)
                 rez.append(row)
     return rez
-
+"""
+def draw_window():
+    print()
 
 @app.route('/')
 def index(route=""):
@@ -228,36 +237,17 @@ def index(route=""):
 
 @app.route('/history/', methods=['POST'])
 def show_history():
-    print()
+    sub_window.show_sub_window(enum.history)
+    return index()
 
 @app.route('/favorite/', methods=['POST'])
 def show_favorite():
-    print('favorite pressed')
-    data = get_data_from_db()
-    window = Tk()
-    window.title("Список избранных маршрутов")
-    window.geometry('400x250')
-    window.attributes("-topmost",True)
-
-    lbl = Label(window, text="начальная точка -> ")
-    lbl.grid(column=0, row=0)
-    lbl2 = Label(window, text="конечная точка")
-    lbl2.grid(column=1, row=0)
-    row=1
-
-    for i in data:
-        lbl3 = Label(window, text=i[1]+' -> ')
-        lbl4 = Label(window, text=i[2])
-        lbl3.grid(column=0, row=row)
-        lbl4.grid(column=1, row=row)
-        row+=1
-
-
-    window.mainloop()
+    sub_window.show_sub_window(enum.favorite)
     return index()
 
 @app.route('/add_to_favorite/', methods=['POST'])
 def add_favorite():
+
     print()
 
 @app.route('/my-link/', methods=['POST'])
@@ -272,6 +262,8 @@ def my_link():
     draw_lines_by_points(map, route)
     add_other_elements_on_page()
     add_route_to_lbl(route)
+    work_database.push_data_to_db(table_name=enum.history,start_point=start_point,end_point=end_point)
+
 
     return render_template('index.html')
 
