@@ -12,21 +12,55 @@ import sub_window
 import work_database
 import users_map
 from tkinter import *
+import os
 
 
 
 root = Tk() # new
 app = Flask(__name__)
 
+
 class enum(Enum):
     favorite = 1
     history = 2
 
-def flask_main():# new
+def before_request():
+    app.jinja_env.cache={}
+app.before_request(before_request)
 
+
+def flask_main():# new
+    """
+    @app.route('/')
+    def index(route=''):
+        stations = users_map.get_stations()
+        map = users_map.draw_stations(stations)
+        users_map.draw_lines_by_points(map, stations)
+        users_map.add_other_elements_on_page()
+        users_map.add_route_to_lbl(route)
+        print('tut bil index()')
+
+        return render_template('index.html')
+
+    @app.route('/my-link/', methods=['POST'])
+    def my_link():
+        print('I got clicked!')
+        start_point = request.form['start_point']
+        end_point = request.form['end_point']
+        route = calc_route(start_point, end_point)
+
+        map = users_map.draw_stations(users_map.get_stations())
+        users_map.draw_lines_by_points(map, route)
+        users_map.add_other_elements_on_page()
+        users_map.add_route_to_lbl(route)
+        work_database.push_data_to_db(table_name=enum.history, start_point=start_point, end_point=end_point)
+
+        return render_template("index.html")
+"""
     app.run() #запуск лупа
 
 def tk_main():# new
+    root.withdraw()
     root.mainloop() #запуск лупа тк
 
 def calc_route(start="", end=""):
@@ -56,9 +90,9 @@ def calc_route(start="", end=""):
 def index(route=''):
     stations= users_map.get_stations()
     map = users_map.draw_stations(stations)
-    users_map.draw_lines_by_points(map, stations)
-    users_map.add_other_elements_on_page()
-    users_map.add_route_to_lbl(route)
+    users_map.draw_lines_by_points(map, stations,'index.html')
+    users_map.add_other_elements_on_page('index.html')
+    users_map.add_route_to_lbl(route,'index.html')
 
     return render_template('index.html')
 
@@ -72,7 +106,7 @@ def show_history():
 @app.route('/favorite/', methods=['POST'])
 def show_favorite():
     sub_window.show_sub_window(enum.favorite)
-    return index()
+    #return index()
 
 @app.route('/add_to_favorite/', methods=['POST'])
 def add_favorite():
@@ -89,18 +123,18 @@ def my_link():
     route = calc_route(start_point, end_point)
 
     map = users_map.draw_stations(users_map.get_stations())
-    users_map.draw_lines_by_points(map, route)
-    users_map.add_other_elements_on_page()
-    users_map.add_route_to_lbl(route)
+    users_map.draw_lines_by_points(map, route,'index4.html')
+    users_map.add_other_elements_on_page('index4.html')
+    users_map.add_route_to_lbl(route,'index4.html')
     work_database.push_data_to_db(table_name=enum.history,start_point=start_point,end_point=end_point)
 
-    return render_template('index.html')
+    return render_template('index4.html')
 
 if __name__ == '__main__':
-    app.run(debug=True) # old
+    #app.run() # old
+
 
     flt = threading.Thread(target=flask_main) # new
     flt.daemon = True # new
     flt.start()  # фоновый процесс # new
-
     tk_main()  # основной поток # new

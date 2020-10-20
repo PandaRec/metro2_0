@@ -7,6 +7,8 @@ import requests
 import bs4
 import server
 import work_database
+import os
+
 
 
 
@@ -24,7 +26,7 @@ def draw_stations(all_stations_in_one_line):
     return map
 
 
-def draw_lines_by_points(map, all_stations_in_one_line):
+def draw_lines_by_points(map, all_stations_in_one_line,name_to_save):
     for i in range(1, len(all_stations_in_one_line)):
         lat1 = all_stations_in_one_line[i - 1].get_lat()
         lat2 = all_stations_in_one_line[i].get_lat()
@@ -34,8 +36,9 @@ def draw_lines_by_points(map, all_stations_in_one_line):
         color_line = folium.ColorLine([[lat1, lng1], [lat2, lng2]], [0],
                                       colormap=[all_stations_in_one_line[i].get_color(), 'orange'],
                                       nb_steps=12, weight=5, opacity=0.7).add_to(map)
+        print('added 1 point')
 
-    map.save("./templates/index.html")
+    map.save("./templates/"+name_to_save)
     print()
 
 
@@ -59,8 +62,8 @@ def get_stations():
     return all_stations_one_line
 
 
-def add_other_elements_on_page():
-    with open('./templates/index.html') as inf:
+def add_other_elements_on_page(name_to_open_and_save):
+    with open('./templates/'+name_to_open_and_save) as inf:
         txt = inf.read()
         soup = bs4.BeautifulSoup(txt)
     he1=soup.find_all("style")[2]
@@ -82,19 +85,19 @@ def add_other_elements_on_page():
     he.insert(2,'<label/>\n')
 
 
-    with open("./templates/index.html", "w") as outf:
+    with open("./templates/"+name_to_open_and_save, "w") as outf:
         outf.write(str(soup))
 
-    with open("./templates/index.html") as f:
+    with open("./templates/"+name_to_open_and_save) as f:
         file = f.read()
         file = file.replace("&lt;", "<")
         file = file.replace("&gt;", ">")
-    with open("./templates/index.html", "w") as w:
+    with open("./templates/"+name_to_open_and_save, "w") as w:
         w.write(file)
     print()
 
 
-def add_route_to_lbl(route):
+def add_route_to_lbl(route,name_of_file):
 
     stations = []
     for i in route:
@@ -104,22 +107,22 @@ def add_route_to_lbl(route):
     aa = str.encode(rr,encoding='utf-8')
     aa = aa.decode(encoding='utf-8')
 
-    with open("./templates/index.html",encoding='utf-8') as f:
+    with open("./templates/"+name_of_file,encoding='utf-8') as f:
         file = f.read()
         if aa=='':
             file = file.replace("<label/>", "<label>" + aa + "</label>")
         else:
             file = file.replace("<label/>", "<p><label>" + aa+ "</label></p>")
-    with open("./templates/index.html", "w",encoding='utf-8') as w:
+    with open("./templates/"+name_of_file, "w",encoding='utf-8') as w:
         w.write(file)
 
 
-def draw_route(start_point,end_point):
+def draw_route(start_point,end_point,name_of_file,name_of_file_to_present):
     route = server.calc_route(start_point, end_point)
 
     map = draw_stations(get_stations())
-    draw_lines_by_points(map, route)
-    add_other_elements_on_page()
-    add_route_to_lbl(route)
+    draw_lines_by_points(map, route,name_of_file)
+    add_other_elements_on_page(name_of_file)
+    add_route_to_lbl(route,name_of_file)
     work_database.push_data_to_db(table_name=server.enum.history, start_point=start_point, end_point=end_point)
-    return render_template('index.html')
+    return render_template(name_of_file_to_present)
