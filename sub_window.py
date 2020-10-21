@@ -26,7 +26,6 @@ def click(event, window):
 
     users_map.draw_route(start_point, end_point,'index.html','index4.html')
     print('11111')
-    print(start_point,end_point,end=' ')
 
 
 
