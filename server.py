@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -
 import threading
 from enum import Enum
+from tkinter.tix import ScrolledWindow
+
 from flask import Flask, render_template, request, flash
 import json
 import folium
@@ -16,7 +18,7 @@ import os
 
 
 
-root = Tk() # new
+#root = Tk() # new
 app = Flask(__name__)
 
 
@@ -30,15 +32,13 @@ app.before_request(before_request)
 
 
 def flask_main():# new
-    """
     @app.route('/')
     def index(route=''):
         stations = users_map.get_stations()
         map = users_map.draw_stations(stations)
-        users_map.draw_lines_by_points(map, stations)
-        users_map.add_other_elements_on_page()
-        users_map.add_route_to_lbl(route)
-        print('tut bil index()')
+        users_map.draw_lines_by_points(map, stations, 'index.html')
+        users_map.add_other_elements_on_page('index.html')
+        users_map.add_route_to_lbl(route, 'index.html')
 
         return render_template('index.html')
 
@@ -50,18 +50,28 @@ def flask_main():# new
         route = calc_route(start_point, end_point)
 
         map = users_map.draw_stations(users_map.get_stations())
-        users_map.draw_lines_by_points(map, route)
-        users_map.add_other_elements_on_page()
-        users_map.add_route_to_lbl(route)
+        users_map.draw_lines_by_points(map, route, 'index4.html')
+        users_map.add_other_elements_on_page('index4.html')
+        users_map.add_route_to_lbl(route, 'index4.html')
         work_database.push_data_to_db(table_name=enum.history, start_point=start_point, end_point=end_point)
 
-        return render_template("index.html")
-"""
+        return render_template('index4.html')
     app.run() #запуск лупа
 
 def tk_main():# new
+
+    root = Tk()
     root.withdraw()
+
+    @app.route('/history/', methods=['POST'])
+    def show_history():
+        print('show_history')
+        root.deiconify()
+        sub_window.test_cub_window()
+        return render_template('index.html')
+
     root.mainloop() #запуск лупа тк
+
 
 def calc_route(start="", end=""):
     print()
@@ -86,22 +96,24 @@ def calc_route(start="", end=""):
         rez.append(all_stations[ind_1])
     return rez
 
-@app.route('/')
-def index(route=''):
-    stations= users_map.get_stations()
-    map = users_map.draw_stations(stations)
-    users_map.draw_lines_by_points(map, stations,'index.html')
-    users_map.add_other_elements_on_page('index.html')
-    users_map.add_route_to_lbl(route,'index.html')
+# @app.route('/')
+# def index(route=''):
+#     stations= users_map.get_stations()
+#     map = users_map.draw_stations(stations)
+#     users_map.draw_lines_by_points(map, stations,'index.html')
+#     users_map.add_other_elements_on_page('index.html')
+#     users_map.add_route_to_lbl(route,'index.html')
+#
+#     return render_template('index.html')
 
-    return render_template('index.html')
+# @app.route('/history/', methods=['POST'])
+# def show_history():
+    #sub_window.show_sub_window(enum.history)
 
-@app.route('/history/', methods=['POST'])
-def show_history():
-    sub_window.show_sub_window(enum.history)
+
     #sub_window.test()
     #sub_window.kkk()
-    return render_template('index.html')
+    #return render_template('index.html')
 
 @app.route('/favorite/', methods=['POST'])
 def show_favorite():
@@ -115,20 +127,20 @@ def add_favorite():
     work_database.push_data_to_db(table_name=enum.favorite,start_point=data[-1][1],end_point=data[-1][2])
     print()
 
-@app.route('/my-link/', methods=['POST'])
-def my_link():
-    print('I got clicked!')
-    start_point = request.form['start_point']
-    end_point = request.form['end_point']
-    route = calc_route(start_point, end_point)
-
-    map = users_map.draw_stations(users_map.get_stations())
-    users_map.draw_lines_by_points(map, route,'index4.html')
-    users_map.add_other_elements_on_page('index4.html')
-    users_map.add_route_to_lbl(route,'index4.html')
-    work_database.push_data_to_db(table_name=enum.history,start_point=start_point,end_point=end_point)
-
-    return render_template('index4.html')
+# @app.route('/my-link/', methods=['POST'])
+# def my_link():
+#     print('I got clicked!')
+#     start_point = request.form['start_point']
+#     end_point = request.form['end_point']
+#     route = calc_route(start_point, end_point)
+#
+#     map = users_map.draw_stations(users_map.get_stations())
+#     users_map.draw_lines_by_points(map, route,'index4.html')
+#     users_map.add_other_elements_on_page('index4.html')
+#     users_map.add_route_to_lbl(route,'index4.html')
+#     work_database.push_data_to_db(table_name=enum.history,start_point=start_point,end_point=end_point)
+#
+#     return render_template('index4.html')
 
 if __name__ == '__main__':
     #app.run() # old
