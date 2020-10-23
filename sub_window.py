@@ -1,254 +1,102 @@
-from flask import render_template
-
+import work_database
+import server
+import json
+import folium
+import station
+import requests
+import bs4
 import server
 import work_database
-import users_map
-from tkinter.tix import *
-#from tkinter import *
-import tkinter as tk
-
-from tkinter import messagebox as mb
+import os
 
 
-
-
-
-
-
-
-
-def click(event, window):
-    button_text = event.widget.cget('text')
-    points = button_text.split('   ->   ')
-    start_point = points[0]
-    end_point = points[1]
-    window.destroy()
-
-    users_map.draw_route(start_point, end_point,'index.html','index4.html')
-    print('11111')
-
-
-
-
-def show_sub_window(my_enum):
-    data = []
-    root = Tk()
-
-    frame = Frame(width="500", height="500")
-    frame.pack()
-    swin = ScrolledWindow(frame, width=500, height=500)
-    swin.pack()
-    win = swin.window
-    root.attributes("-topmost", True)
-
-    if my_enum.name == server.enum.favorite.name:
-        data = work_database.get_data_from_db(table_name=server.enum.favorite)
-        root.wm_title('Избранное')
-
-    else:
-        data = work_database.get_data_from_db(table_name=server.enum.history)
-        root.wm_title('История')
-
-    for i in data:
-        #btn = Button(win, text=i[1] + '   ->   ' + i[2], command=lambda window=win: click(btn))#, command=lambda window=win: click(root)
-        btn = Button(win, text=i[1] + '   ->   ' + i[2])
-
-
-        #btn = Button(win, text=i[1] + '   ->   ' + i[2])
-        #btn.bind("<Button-1>", lambda event: click_route(event, btn["text"]))
-
-        #btn.bind('<Button-1>', on_click)
-        btn.bind('<Button-1>', lambda event: click(event, root))
-        btn.pack()
+def show_history_or_favorite(choice):
     print()
-
-
-
-    menu = Menu(root)
-    root.config(menu=menu)
-
-    filemenu = Menu(menu)
-    menu.add_cascade(label="Commands", menu=filemenu)
-
-    #ans = mb.askyesno(message="открыть сайт")
-
-
-    root.mainloop()
-
-
-    """
-    window = Tk()
-    data = []
-    if my_enum.name==server.enum.favorite.name:
+    if choice.name == server.enum.favorite.name:
         data = work_database.get_data_from_db(table_name=server.enum.favorite)
-        window.title("Избранные маршруты")
-
-        print('favorite pressed')
-
     else:
         data = work_database.get_data_from_db(table_name=server.enum.history)
-        window.title("Истрия маршрутов")
+    os.remove('templates/history_favorite.html')
 
+    with open("templates/history_favorite.html", "w") as outf:
+        outf.write('<!DOCTYPE html>\n'
+'<html>\n'
+    '<head>\n'
+        '<meta content="text/html; charset=utf-8" http-equiv="content-type"/>\n'
 
-        print('history')
+        '<style>\n'
+                   'form{\n'
+        'text-align: center;\n'
+        'margin-bottom: 5px;\n'
+    '}\n'
+    'input{\n'
+        'width: 250px;\n'
+        'background-color: white;\n'
+        'border: 1px solid gray;\n'
+    '}\n'
+        '</style>\n'
 
-    window.geometry('400x250')
-    window.attributes("-topmost", True)
+    '</head>\n'
 
+    '<body>\n'
 
+    '</body>\n'
+'</html>')
 
-    row = 1
-    for i in data:
-        btn = Button(text=i[1] + '   ->   '+i[2])
-        btn.bind("<Button-1>", lambda event: click_route(event, btn["text"]))
+    with open('templates/history_favorite.html') as inf:
+        txt = inf.read()
+        soup = bs4.BeautifulSoup(txt)
+    he1=soup.find_all("style")
+    he = soup.find("body")
+    # <form action="/my-link/"><input type="submit" value="Click me" /></form>
 
-        btn.grid(column=0, row=row)
-        row += 1
+    # he.insert(1,'<form action="/point_1/" method="post"><input type="text" placeholder="kk" name="point"></form>\n')
+    #he1.append('form{display: inline;}')
+    # he.insert(1,
+    #           '<form action="/my-link/" method="post">\n'
+    #           '<input type="text" placeholder="start point" name="start_point">'
+    #           '\n<input type="text" placeholder="end point" name="end_point">\n'
+    #           '<input type="submit" value="Route" />\n'
+    #           '</form>\n'
+    #           '<form action="/history/" method="post"> <input type="submit" value="history" /></form>\n'
+    #           '<form action="/favorite/" method="post"> <input type="submit" value="favorite" /></form>\n'
+    #           '<form action="/add_to_favorite/" method="post"> <input type="submit" value="add to favorite" /></form>\n')
+    #
+    # he.insert(2,'<label/>\n')
 
-    window.mainloop()
     """
+    aa = str.encode(rr,encoding='utf-8')
+        aa = aa.decode(encoding='utf-8')
 
-
-def show():
-    print('aaaaaaaaaaaaaaaa')
-
-
-def test():
-    #root = Tk()
-    root.wm_title('Got Skills\' Skill Tracker')
-    frame = Frame(width="500", height="500")
-    frame.pack()
-    swin = ScrolledWindow(frame, width=500, height=500)
-    swin.pack()
-    win = swin.window
-
-    w = Message(win, text='fffff', width=500)
-
-    w.pack()
-
-    # buttonText.set("1")
-    # w1 = Button(win,textvariable=buttonText, command=click)
-
-    # w1.pack()
-
-    root.mainloop()
-
-
-def kkk():
-    #root = Tk()
-    frame = Frame(width="500", height="500")
-    frame.pack()
-    swin = ScrolledWindow(frame, width=500, height=500)
-    swin.pack()
-    win = swin.window
-    root.attributes("-topmost", True)
-    root.wm_title('Избранное')
-    btn = Button(win, text='111',command=lambda window=win: click(root))
-    btn.pack()
-
-
-    root.mainloop()
-
-def test_cub_window():
+        with open("./templates/"+name_of_file,encoding='utf-8') as f:
+            file = f.read()
+            if aa=='':
+                file = file.replace("<label/>", "<label>" + aa + "</label>")
+            else:
+                file = file.replace("<label/>", "<p><label>" + aa+ "</label></p>")
+        with open("./templates/"+name_of_file, "w",encoding='utf-8') as w:
+            w.write(file)
     """
-    root = Tk()
-    root.geometry("300x200")
-
-    w = Label(root, text='GeeksForGeeks',
-              font="50")
-
-    w.pack()
-
-    scroll_bar = Scrollbar(root)
-
-    scroll_bar.pack(side=RIGHT,
-                    fill=Y)
-
-    mylist = Listbox(root,
-                     yscrollcommand=scroll_bar.set)
-
-    for line in range(1, 26):
-        mylist.insert(END, "Geeks " + str(line))
-
-
-    data = work_database.get_data_from_db(table_name=server.enum.history)
+    #data = work_database.get_data_from_db(table_name=server.enum.history)
 
     for i in data:
-        mylist.insert(END,i[1] + '   ->   ' + i[2])
+        rr = i[1] + '   ->   ' + i[2]
+        aa = str.encode(rr, encoding='utf-8')
+        aa = aa.decode(encoding='utf-8')
 
-        #btn = Button(win, text=i[1] + '   ->   ' + i[2], command=lambda window=win: click(btn))#, command=lambda window=win: click(root)
+        he.append('<form action="/my/" method="post">\n'
+                  '<input type="submit" value="'+aa+'" name="ff"/>\n'
+                  '</form>\n')
 
+    with open("templates/history_favorite.html", "w", encoding='utf-8') as outf:
+        outf.write(str(soup))
 
-        #btn = Button(win, text=i[1] + '   ->   ' + i[2])
-        #btn.bind("<Button-1>", lambda event: click_route(event, btn["text"]))
-
-        #btn.bind('<Button-1>', on_click)
-        btn.bind('<Button-1>', lambda event: click(event, root))
-        btn.pack()
-
-    mylist.pack(side=LEFT, fill=BOTH)
-
-    scroll_bar.config(command=mylist.yview)
-
-    root.mainloop()
-    """
-    """
-    root = tk.Tk()
-
-    scrollbar = tk.Scrollbar(root)
-    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-
-    checklist = tk.Text(root, width=20)
-    checklist.pack()
-
-    vars = []
-
-    data = work_database.get_data_from_db(table_name=server.enum.history)
-
-    for i in data:
-        var = tk.IntVar()
-        vars.append(var)
-        checkbutton = tk.Button(checklist, text=i[1] + '   ->   ' + i[2])
-        checkbutton.bind('<Button-1>', lambda event: click(event, root))
-        checklist.window_create("end", window=checkbutton)
-        checklist.insert("end", "\n")
-
-    checklist.config(yscrollcommand=scrollbar.set)
-    scrollbar.config(command=checklist.yview)
-
-    # disable the widget so users can't insert text into it
-    checklist.configure(state="disabled")
-
-    root.mainloop()
-"""
-
-    root1 = tk.Tk()
-
-    data = work_database.get_data_from_db(table_name=server.enum.history)
-
-
-    #text_widget = tk.Text(root)
-    #text_widget = tk.Grid(root)
-
-    draw = Canvas(width=230, height=5000, scrollregion=(0, 0, 230, 5000))
-    draw.sbar = Scrollbar(orient=VERTICAL)
-    frame = Frame(draw)
-    draw.create_window(0, 0, window=frame, width=230, height=5000, anchor=N + W)
-    for i in data:
-        btn = Button(frame, width=30,text=i[1] + '   ->   ' + i[2])
-        btn.bind('<Button-1>', lambda event: click(event, root1))
-        btn.pack()
-
-    draw['yscrollcommand'] = draw.sbar.set
-    draw.sbar['command'] = draw.yview
-    draw.sbar.pack(side=RIGHT, fill=Y)
-    draw.pack()
-    #return render_template('index.html')
-
-    root1.mainloop()
-
-
-
+    with open("templates/history_favorite.html", encoding='utf-8') as f:
+        file = f.read()
+        file = file.replace("&lt;", "<")
+        file = file.replace("&gt;", ">")
+    with open("templates/history_favorite.html", "w", encoding='utf-8') as w:
+        w.write(file)
 
 
 

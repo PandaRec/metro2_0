@@ -10,12 +10,12 @@ import folium
 import station
 import requests
 import bs4
-import sub_window
+import old_sub_window
 import work_database
 import users_map
 from tkinter import *
 import os
-import history
+import sub_window
 
 
 
@@ -111,17 +111,18 @@ def index(route=''):
 def show_history():
 
     #sub_window.show_sub_window(enum.history)
-    history.show_history()
+    sub_window.show_history_or_favorite(enum.history)
 
 
     #sub_window.test()
     #sub_window.kkk()
-    return render_template('history.html')
+    return render_template('history_favorite.html')
 
 @app.route('/favorite/', methods=['POST'])
 def show_favorite():
-    sub_window.show_sub_window(enum.favorite)
-    #return index()
+    sub_window.show_history_or_favorite(enum.favorite)
+    return render_template('history_favorite.html')
+
 
 @app.route('/add_to_favorite/', methods=['POST'])
 def add_favorite():
