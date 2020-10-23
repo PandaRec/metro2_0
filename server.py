@@ -149,6 +149,13 @@ def my_link():
 def historybuttonpressed():
     print()
     print('history-button-pressed')
+    points = request.form['ff'].split('   ->   ')
+    start_point = points[0]
+    end_point = points[1]
+
+
+    users_map.draw_route(start_point, end_point,'index.html','index4.html')
+
     print(request.form['ff'])
     return render_template('index.html')
 

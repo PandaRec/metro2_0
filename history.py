@@ -22,7 +22,15 @@ def show_history():
         '<meta content="text/html; charset=utf-8" http-equiv="content-type"/>\n'
 
         '<style>\n'
-        #'form{display: inline;}\n'
+                   'form{\n'
+        'text-align: center;\n'
+        'margin-bottom: 5px;\n'
+    '}\n'
+    'input{\n'
+        'width: 250px;\n'
+        'background-color: white;\n'
+        'border: 1px solid gray;\n'
+    '}\n'
         '</style>\n'
 
     '</head>\n'
@@ -53,24 +61,38 @@ def show_history():
     #
     # he.insert(2,'<label/>\n')
 
+    """
+    aa = str.encode(rr,encoding='utf-8')
+        aa = aa.decode(encoding='utf-8')
 
+        with open("./templates/"+name_of_file,encoding='utf-8') as f:
+            file = f.read()
+            if aa=='':
+                file = file.replace("<label/>", "<label>" + aa + "</label>")
+            else:
+                file = file.replace("<label/>", "<p><label>" + aa+ "</label></p>")
+        with open("./templates/"+name_of_file, "w",encoding='utf-8') as w:
+            w.write(file)
+    """
+    data = work_database.get_data_from_db(table_name=server.enum.history)
 
+    for i in data:
+        rr = i[1] + '   ->   ' + i[2]
+        aa = str.encode(rr, encoding='utf-8')
+        aa = aa.decode(encoding='utf-8')
 
-    for i in range(50):
         he.append('<form action="/my/" method="post">\n'
-                  '<input type="submit" value="'+str(i)+'" name="ff"/>\n'
+                  '<input type="submit" value="'+aa+'" name="ff"/>\n'
                   '</form>\n')
 
-        #btn = Button(win, text=i[1] + '   ->   ' + i[2])
-
-    with open("./templates/history.html", "w") as outf:
+    with open("./templates/history.html", "w",encoding='utf-8') as outf:
         outf.write(str(soup))
 
-    with open("./templates/history.html") as f:
+    with open("./templates/history.html",encoding='utf-8') as f:
         file = f.read()
         file = file.replace("&lt;", "<")
         file = file.replace("&gt;", ">")
-    with open("./templates/history.html", "w") as w:
+    with open("./templates/history.html", "w",encoding='utf-8') as w:
         w.write(file)
 
 
