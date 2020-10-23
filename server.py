@@ -15,6 +15,7 @@ import work_database
 import users_map
 from tkinter import *
 import os
+import history
 
 
 
@@ -108,12 +109,14 @@ def index(route=''):
 
 @app.route('/history/', methods=['POST'])
 def show_history():
-    sub_window.show_sub_window(enum.history)
+
+    #sub_window.show_sub_window(enum.history)
+    history.show_history()
 
 
     #sub_window.test()
     #sub_window.kkk()
-    return render_template('index.html')
+    return render_template('history.html')
 
 @app.route('/favorite/', methods=['POST'])
 def show_favorite():
@@ -135,12 +138,20 @@ def my_link():
     route = calc_route(start_point, end_point)
 
     map = users_map.draw_stations(users_map.get_stations())
-    users_map.draw_lines_by_points(map, route,'index4.html')
+    users_map.draw_lines_by_points(map, route, 'index4.html')
     users_map.add_other_elements_on_page('index4.html')
-    users_map.add_route_to_lbl(route,'index4.html')
+    users_map.add_route_to_lbl(route, 'index4.html')
     work_database.push_data_to_db(table_name=enum.history,start_point=start_point,end_point=end_point)
 
     return render_template('index4.html')
+
+@app.route('/my/', methods=['POST'])
+def historybuttonpressed():
+    print()
+    print('history-button-pressed')
+    print(request.form['ff'])
+    return render_template('index.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True) # old
