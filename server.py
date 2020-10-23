@@ -14,6 +14,8 @@ import users_map
 from tkinter import *
 import os
 import sub_window
+import sign_up
+import sign_in
 
 #root = Tk() # new
 app = Flask(__name__)
@@ -22,6 +24,7 @@ app = Flask(__name__)
 class enum(Enum):
     favorite = 1
     history = 2
+    auth = 3
 
 def calc_route(start="", end=""):
     print()
@@ -54,7 +57,7 @@ def index(route=''):
     users_map.add_other_elements_on_page('index.html')
     users_map.add_route_to_lbl(route,'index.html')
 
-    return render_template('index.html')
+    return render_template('sign_in.html')#    return render_template('index.html')
 
 @app.route('/history/', methods=['POST'])
 def show_history():
@@ -94,6 +97,23 @@ def add_to_favorite(start_point='',end_point=''):
     print(start_point,end_point,end=' ')
     work_database.push_data_to_db(enum.favorite,start_point,end_point)
     return render_template('index.html')
+
+@app.route('/sign-in-sign-up/', methods=['POST'])
+def signing_in():
+    print()
+    btn = request.form['btn']
+    #sign_in.show_history_or_favorite(enum.favorite)
+    if btn == 'Войти':
+        sign_in.enter()
+    else:
+        sign_up.registr()
+
+    #login = request.form['login']
+    #password = request.form['password']
+    #return  render_template('index.html')
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True) # old
