@@ -49,4 +49,3 @@ class station:
 
     def get_description(self):
         return self.description
-

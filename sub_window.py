@@ -11,7 +11,6 @@ import os
 
 
 def show_history_or_favorite(choice):
-    print()
     if choice.name == server.enum.favorite.name:
         data = work_database.get_data_from_db(table_name=server.enum.favorite)
     else:
@@ -48,36 +47,6 @@ def show_history_or_favorite(choice):
         soup = bs4.BeautifulSoup(txt)
     he1=soup.find_all("style")
     he = soup.find("body")
-    # <form action="/my-link/"><input type="submit" value="Click me" /></form>
-
-    # he.insert(1,'<form action="/point_1/" method="post"><input type="text" placeholder="kk" name="point"></form>\n')
-    #he1.append('form{display: inline;}')
-    # he.insert(1,
-    #           '<form action="/my-link/" method="post">\n'
-    #           '<input type="text" placeholder="start point" name="start_point">'
-    #           '\n<input type="text" placeholder="end point" name="end_point">\n'
-    #           '<input type="submit" value="Route" />\n'
-    #           '</form>\n'
-    #           '<form action="/history/" method="post"> <input type="submit" value="history" /></form>\n'
-    #           '<form action="/favorite/" method="post"> <input type="submit" value="favorite" /></form>\n'
-    #           '<form action="/add_to_favorite/" method="post"> <input type="submit" value="add to favorite" /></form>\n')
-    #
-    # he.insert(2,'<label/>\n')
-
-    """
-    aa = str.encode(rr,encoding='utf-8')
-        aa = aa.decode(encoding='utf-8')
-
-        with open("./templates/"+name_of_file,encoding='utf-8') as f:
-            file = f.read()
-            if aa=='':
-                file = file.replace("<label/>", "<label>" + aa + "</label>")
-            else:
-                file = file.replace("<label/>", "<p><label>" + aa+ "</label></p>")
-        with open("./templates/"+name_of_file, "w",encoding='utf-8') as w:
-            w.write(file)
-    """
-    #data = work_database.get_data_from_db(table_name=server.enum.history)
 
     for i in data:
         rr = i[1] + '   ->   ' + i[2]
@@ -97,6 +66,3 @@ def show_history_or_favorite(choice):
         file = file.replace("&gt;", ">")
     with open("templates/history_favorite.html", "w", encoding='utf-8') as w:
         w.write(file)
-
-
-

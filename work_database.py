@@ -2,7 +2,6 @@ import server
 from contextlib import closing
 import psycopg2
 
-
 def get_data_from_db(table_name, id='1'):
     if table_name.name == server.enum.favorite.name:
         rez = []
@@ -27,8 +26,6 @@ def get_data_from_db(table_name, id='1'):
 
 
 def push_data_to_db(table_name, start_point, end_point, id='1'):
-
-
 
     if table_name.name == server.enum.favorite.name:
         with closing(psycopg2.connect(dbname='metro2_0', user='postgres',

@@ -16,15 +16,11 @@ def draw_stations(all_stations_in_one_line):
     map = folium.Map(location=[43.25654, 76.92848], zoom_start=12)
 
     for j in all_stations_in_one_line:
-        print()
-
-        # folium.Marker(location=[j.get_lat(),j.get_lng()], popup = "Google HQ", icon=folium.Icon(color = j.get_color())).add_to(map)
         folium.CircleMarker(location=[j.get_lat(), j.get_lng()], radius=9, popup=j.get_name(),
                             fill_color=j.get_color(),
                             color="black", fill_opacity=0.9).add_to(map)
-    print()
-    return map
 
+    return map
 
 def draw_lines_by_points(map, all_stations_in_one_line,name_to_save):
     for i in range(1, len(all_stations_in_one_line)):
@@ -36,11 +32,8 @@ def draw_lines_by_points(map, all_stations_in_one_line,name_to_save):
         color_line = folium.ColorLine([[lat1, lng1], [lat2, lng2]], [0],
                                       colormap=[all_stations_in_one_line[i].get_color(), 'orange'],
                                       nb_steps=12, weight=5, opacity=0.7).add_to(map)
-        print('added 1 point')
 
     map.save("./templates/"+name_to_save)
-    print()
-
 
 def get_stations():
     """ request to hh to get list of stations. refactor to list of class"""
@@ -68,9 +61,6 @@ def add_other_elements_on_page(name_to_open_and_save):
         soup = bs4.BeautifulSoup(txt)
     he1=soup.find_all("style")[2]
     he = soup.find("body")
-    # <form action="/my-link/"><input type="submit" value="Click me" /></form>
-
-    # he.insert(1,'<form action="/point_1/" method="post"><input type="text" placeholder="kk" name="point"></form>\n')
     he1.append('form{display: inline;}')
     he.insert(1,
               '<form action="/my-link/" method="post">\n'
@@ -81,11 +71,9 @@ def add_other_elements_on_page(name_to_open_and_save):
               '</form>\n'
               '<form action="/history/" method="post"> <input type="submit" value="history" /></form>\n'
               '<form action="/favorite/" method="post"> <input type="submit" value="favorite" /></form>\n'
-             # '<form action="/add_to_favorite/" method="post"> <input type="submit" value="add to favorite" name="btn"/></form>\n'
               )
 
     he.insert(2,'<label/>\n')
-
 
     with open("./templates/"+name_to_open_and_save, "w") as outf:
         outf.write(str(soup))
@@ -96,11 +84,8 @@ def add_other_elements_on_page(name_to_open_and_save):
         file = file.replace("&gt;", ">")
     with open("./templates/"+name_to_open_and_save, "w") as w:
         w.write(file)
-    print()
-
 
 def add_route_to_lbl(route,name_of_file):
-
     stations = []
     for i in route:
         stations.append(i.get_name())
@@ -118,7 +103,6 @@ def add_route_to_lbl(route,name_of_file):
     with open("./templates/"+name_of_file, "w",encoding='utf-8') as w:
         w.write(file)
 
-
 def draw_route(start_point,end_point,name_of_file,name_of_file_to_present):
     route = server.calc_route(start_point, end_point)
 
@@ -127,4 +111,5 @@ def draw_route(start_point,end_point,name_of_file,name_of_file_to_present):
     add_other_elements_on_page(name_of_file)
     add_route_to_lbl(route,name_of_file)
     work_database.push_data_to_db(table_name=server.enum.history, start_point=start_point, end_point=end_point)
+
     return render_template(name_of_file_to_present)
