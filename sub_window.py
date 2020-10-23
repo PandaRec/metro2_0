@@ -12,9 +12,9 @@ import os
 
 def show_history_or_favorite(choice):
     if choice.name == server.enum.favorite.name:
-        data = work_database.get_data_from_db(table_name=server.enum.favorite)
+        data = work_database.get_data_from_db_history_or_favorite(table_name=server.enum.favorite)
     else:
-        data = work_database.get_data_from_db(table_name=server.enum.history)
+        data = work_database.get_data_from_db_history_or_favorite(table_name=server.enum.history)
     os.remove('templates/history_favorite.html')
 
     with open("templates/history_favorite.html", "w") as outf:

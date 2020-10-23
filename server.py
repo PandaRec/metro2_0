@@ -81,7 +81,7 @@ def my_link():
         users_map.draw_lines_by_points(map, route, 'index4.html')
         users_map.add_other_elements_on_page('index4.html')
         users_map.add_route_to_lbl(route, 'index4.html')
-        work_database.push_data_to_db(table_name=enum.history,start_point=start_point,end_point=end_point)
+        work_database.push_data_to_db_history_or_favorite(table_name=enum.history,start_point=start_point,end_point=end_point)
 
     return render_template('index4.html')
 
@@ -95,7 +95,7 @@ def historybuttonpressed():
 
 def add_to_favorite(start_point='',end_point=''):
     print(start_point,end_point,end=' ')
-    work_database.push_data_to_db(enum.favorite,start_point,end_point)
+    work_database.push_data_to_db_history_or_favorite(enum.favorite,start_point,end_point)
     return render_template('index.html')
 
 @app.route('/sign-in-sign-up/', methods=['POST'])
@@ -103,16 +103,24 @@ def signing_in():
     print()
     btn = request.form['btn']
     #sign_in.show_history_or_favorite(enum.favorite)
+    sign=False
     if btn == 'Войти':
-        sign_in.enter()
+        sign = sign_in.enter()
     else:
-        sign_up.registr()
-
-    #login = request.form['login']
-    #password = request.form['password']
-    #return  render_template('index.html')
+        return render_template('sign_up.html')
 
 
+
+    if sign==True:
+        return render_template('index.html')
+    else:
+        return render_template('sign_in.html')
+
+
+@app.route('/registration/', methods=['POST'])
+def registration():
+    sign_up.registr()
+    return render_template('index.html')
 
 
 if __name__ == '__main__':

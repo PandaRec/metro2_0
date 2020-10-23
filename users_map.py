@@ -71,6 +71,8 @@ def add_other_elements_on_page(name_to_open_and_save):
               '</form>\n'
               '<form action="/history/" method="post"> <input type="submit" value="history" /></form>\n'
               '<form action="/favorite/" method="post"> <input type="submit" value="favorite" /></form>\n'
+              '<form action="/your-friends/" method="post"> <input type="submit" value="your friends favorite routes" /></form>\n'
+
               )
 
     he.insert(2,'<label/>\n')
@@ -110,6 +112,6 @@ def draw_route(start_point,end_point,name_of_file,name_of_file_to_present):
     draw_lines_by_points(map, route,name_of_file)
     add_other_elements_on_page(name_of_file)
     add_route_to_lbl(route,name_of_file)
-    work_database.push_data_to_db(table_name=server.enum.history, start_point=start_point, end_point=end_point)
+    work_database.push_data_to_db_history_or_favorite(table_name=server.enum.history, start_point=start_point, end_point=end_point)
 
     return render_template(name_of_file_to_present)

@@ -13,6 +13,13 @@ from tkinter import *
 import os
 import sub_window
 def enter():
-    print()
+    data_from_auth = work_database.get_auth_from_db()
     login = request.form['login']
     password = request.form['password']
+
+    for i in data_from_auth:
+        print()
+        if i[1] == login and i[2] == password:
+            return True
+
+
