@@ -76,11 +76,13 @@ def add_other_elements_on_page(name_to_open_and_save):
               '<form action="/my-link/" method="post">\n'
               '<input type="text" placeholder="start point" name="start_point">'
               '\n<input type="text" placeholder="end point" name="end_point">\n'
-              '<input type="submit" value="Route" />\n'
+              '<input type="submit" value="route" name="btn"/>\n'
+              '<input type="submit" value="add to favorite" name="btn"/>'
               '</form>\n'
               '<form action="/history/" method="post"> <input type="submit" value="history" /></form>\n'
               '<form action="/favorite/" method="post"> <input type="submit" value="favorite" /></form>\n'
-              '<form action="/add_to_favorite/" method="post"> <input type="submit" value="add to favorite" /></form>\n')
+             # '<form action="/add_to_favorite/" method="post"> <input type="submit" value="add to favorite" name="btn"/></form>\n'
+              )
 
     he.insert(2,'<label/>\n')
 

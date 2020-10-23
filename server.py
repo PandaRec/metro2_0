@@ -136,13 +136,16 @@ def my_link():
     print('I got clicked!')
     start_point = request.form['start_point']
     end_point = request.form['end_point']
-    route = calc_route(start_point, end_point)
+    if request.form['btn'] == 'add to favorite':
+        add_to_favorite(start_point,end_point)
+    else:
+        route = calc_route(start_point, end_point)
 
-    map = users_map.draw_stations(users_map.get_stations())
-    users_map.draw_lines_by_points(map, route, 'index4.html')
-    users_map.add_other_elements_on_page('index4.html')
-    users_map.add_route_to_lbl(route, 'index4.html')
-    work_database.push_data_to_db(table_name=enum.history,start_point=start_point,end_point=end_point)
+        map = users_map.draw_stations(users_map.get_stations())
+        users_map.draw_lines_by_points(map, route, 'index4.html')
+        users_map.add_other_elements_on_page('index4.html')
+        users_map.add_route_to_lbl(route, 'index4.html')
+        work_database.push_data_to_db(table_name=enum.history,start_point=start_point,end_point=end_point)
 
     return render_template('index4.html')
 
@@ -158,6 +161,10 @@ def historybuttonpressed():
     users_map.draw_route(start_point, end_point,'index.html','index4.html')
 
     print(request.form['ff'])
+    return render_template('index.html')
+def add_to_favorite(start_point='',end_point=''):
+    print(start_point,end_point,end=' ')
+    work_database.push_data_to_db(enum.favorite,start_point,end_point)
     return render_template('index.html')
 
 
