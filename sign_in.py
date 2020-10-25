@@ -12,6 +12,7 @@ import users_map
 from tkinter import *
 import os
 import sub_window
+import user
 def enter():
     data_from_auth = work_database.get_auth_from_db()
     login = request.form['login']
@@ -20,6 +21,10 @@ def enter():
     for i in data_from_auth:
         print()
         if i[1] == login and i[2] == password:
-            return True
+            one_user = user.current_user()
+            one_user.set_id(i[0])
+            one_user.set_login(i[1])
+            one_user.set_phone(i[3])
+            return one_user
 
 

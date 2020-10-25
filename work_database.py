@@ -67,7 +67,7 @@ def get_friends_from_db(friend):
     with closing(psycopg2.connect(dbname='metro2_0', user='postgres',
                                   password='3400430', host='127.0.0.1')) as conn:
         with conn.cursor() as cursor:
-            cursor.execute('SELECT * FROM friends where friend1=' + friend)
+            cursor.execute('SELECT * FROM friends where friend1=' + str(friend))
             for row in cursor:
                 print(row)
                 rez.append(row)

@@ -16,11 +16,11 @@ import os
 import sub_window
 import sign_up
 import sign_in
+import user
 
 #root = Tk() # new
 app = Flask(__name__)
-
-
+#global cur_user
 class enum(Enum):
     favorite = 1
     history = 2
@@ -56,6 +56,8 @@ def index(route=''):
     users_map.draw_lines_by_points(map, stations,'index.html')
     users_map.add_other_elements_on_page('index.html')
     users_map.add_route_to_lbl(route,'index.html')
+
+
 
     return render_template('sign_in.html')#    return render_template('index.html')
 
@@ -103,7 +105,7 @@ def signing_in():
     print()
     btn = request.form['btn']
     #sign_in.show_history_or_favorite(enum.favorite)
-    sign=False
+    global cur
     if btn == 'Войти':
         sign = sign_in.enter()
     else:
@@ -111,7 +113,8 @@ def signing_in():
 
 
 
-    if sign==True:
+    if sign!=None:
+        cur=sign
         return render_template('index.html')
     else:
         return render_template('sign_in.html')
@@ -121,6 +124,21 @@ def signing_in():
 def registration():
     sign_up.registr()
     return render_template('index.html')
+
+@app.route('/your-friends/', methods=['POST'])
+def your_friends():
+    aa = work_database.get_friends_from_db(cur.get_id())
+    to_send = []
+    for i in aa:
+        lol  = work_database.get_data_from_db_history_or_favorite(enum.favorite,str(i[1]))
+        to_send.append(lol)
+
+        print()
+
+    print()
+    print()
+
+
 
 
 if __name__ == '__main__':
