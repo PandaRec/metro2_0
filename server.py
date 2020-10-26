@@ -3,24 +3,23 @@
 from enum import Enum
 
 from flask import Flask, render_template, request, flash
-import json
-import folium
-import station
-import requests
-import bs4
-import old_sub_window
+# import json
+# import folium
+# import station
+# import requests
+# import bs4
+# import old_sub_window
 import work_database
 import users_map
 from tkinter import *
-import os
+# import os
 import sub_window
 import sign_up
 import sign_in
-import user
+# import user
 
-#root = Tk() # new
 app = Flask(__name__)
-#global cur_user
+
 class enum(Enum):
     favorite = 1
     history = 2
@@ -56,8 +55,6 @@ def index(route=''):
     users_map.draw_lines_by_points(map, stations,'index.html')
     users_map.add_other_elements_on_page('index.html')
     users_map.add_route_to_lbl(route,'index.html')
-
-
 
     return render_template('sign_in.html')#    return render_template('index.html')
 
@@ -138,4 +135,4 @@ def your_friends():
 
 
 if __name__ == '__main__':
-    app.run(debug=True) # old
+    app.run(debug=True)

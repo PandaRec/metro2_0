@@ -7,10 +7,6 @@ import requests
 import bs4
 import server
 import work_database
-import os
-
-
-
 
 def draw_stations(all_stations_in_one_line):
     map = folium.Map(location=[43.25654, 76.92848], zoom_start=12)

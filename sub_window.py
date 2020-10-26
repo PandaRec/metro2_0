@@ -121,6 +121,3 @@ def show_friends_favorite(data):
             file = file.replace("&gt;", ">")
         with open("templates/friends_favorite.html", "w", encoding='utf-8') as w:
             w.write(file)
-
-
-

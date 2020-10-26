@@ -32,4 +32,3 @@ class current_user:
 
     def get_friends(self):
         return self.friends
-

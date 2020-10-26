@@ -1,8 +1,8 @@
 import re
-
 from flask import Flask, render_template, request, flash
 import work_database
 import user
+
 def registr():
     name = request.form['nm']
     sername = request.form['sername']
@@ -18,7 +18,6 @@ def registr():
 
     if pass1!=pass2:
         return False
-
     elif re.search(r"^([7]\d{10})$", phone, re.MULTILINE)==None:
         return False
     elif check=='no':
@@ -32,4 +31,3 @@ def registr():
         one_user.set_login(login)
         one_user.set_phone(phone)
         return one_user
-
