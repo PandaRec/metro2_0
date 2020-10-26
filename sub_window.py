@@ -10,11 +10,11 @@ import work_database
 import os
 
 
-def show_history_or_favorite(choice):
+def show_history_or_favorite(choice,id):
     if choice.name == server.enum.favorite.name:
-        data = work_database.get_data_from_db_history_or_favorite(table_name=server.enum.favorite)
+        data = work_database.get_data_from_db_history_or_favorite(table_name=server.enum.favorite,id=str(id))
     else:
-        data = work_database.get_data_from_db_history_or_favorite(table_name=server.enum.history)
+        data = work_database.get_data_from_db_history_or_favorite(table_name=server.enum.history,id=str(id))
     os.remove('templates/history_favorite.html')
 
     with open("templates/history_favorite.html", "w") as outf:

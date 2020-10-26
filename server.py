@@ -19,6 +19,7 @@ import sign_in
 # import user
 
 app = Flask(__name__)
+global cur
 
 class enum(Enum):
     favorite = 1
@@ -60,12 +61,12 @@ def index(route=''):
 
 @app.route('/history/', methods=['POST'])
 def show_history():
-    sub_window.show_history_or_favorite(enum.history)
+    sub_window.show_history_or_favorite(enum.history,cur.get_id())
     return render_template('history_favorite.html')
 
 @app.route('/favorite/', methods=['POST'])
 def show_favorite():
-    sub_window.show_history_or_favorite(enum.favorite)
+    sub_window.show_history_or_favorite(enum.favorite,cur.get_id())
     return render_template('history_favorite.html')
 
 @app.route('/my-link/', methods=['POST'])
@@ -80,7 +81,8 @@ def my_link():
         users_map.draw_lines_by_points(map, route, 'index4.html')
         users_map.add_other_elements_on_page('index4.html')
         users_map.add_route_to_lbl(route, 'index4.html')
-        work_database.push_data_to_db_history_or_favorite(table_name=enum.history,start_point=start_point,end_point=end_point)
+
+        work_database.push_data_to_db_history_or_favorite(table_name=enum.history,start_point=start_point,end_point=end_point,id=str(cur.get_id()))
 
     return render_template('index4.html')
 
@@ -94,7 +96,7 @@ def historybuttonpressed():
 
 def add_to_favorite(start_point='',end_point=''):
     print(start_point,end_point,end=' ')
-    work_database.push_data_to_db_history_or_favorite(enum.favorite,start_point,end_point)
+    work_database.push_data_to_db_history_or_favorite(enum.favorite,start_point,end_point,str(cur.get_id()))
     return render_template('index.html')
 
 @app.route('/sign-in-sign-up/', methods=['POST'])
@@ -107,6 +109,8 @@ def signing_in():
         return render_template('sign_up.html')
     if sign!=None:
         cur=sign
+        lol = cur.get_id()
+        print()
         return render_template('index.html')
     else:
         return render_template('sign_in.html')
