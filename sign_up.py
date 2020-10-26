@@ -2,6 +2,7 @@ import re
 
 from flask import Flask, render_template, request, flash
 import work_database
+import user
 def registr():
     name = request.form['nm']
     sername = request.form['sername']
@@ -23,9 +24,12 @@ def registr():
     elif check=='no':
         return False
     else:
-        work_database.push_data_to_db_auth(login,pass1,phone,2)
+        data = work_database.get_auth_from_db()
+        print()
+        work_database.push_data_to_db_auth(login,pass1,phone,data[-1][0]+1)
+        one_user = user.current_user()
+        one_user.set_id(data[-1][0]+1)
+        one_user.set_login(login)
+        one_user.set_phone(phone)
+        return one_user
 
-
-
-    print()
-    print()

@@ -102,20 +102,25 @@ def show_friends_favorite(data):
     print()
 
     for i in data:
-        rr = i[1] + '   ->   ' + i[2]
-        aa = str.encode(rr, encoding='utf-8')
-        aa = aa.decode(encoding='utf-8')
+        for j in i:
+            print()
+            rr = j[1] + '   ->   ' + j[2]
+            aa = str.encode(rr, encoding='utf-8')
+            aa = aa.decode(encoding='utf-8')
 
-        he.append('<form action="/my/" method="post">\n'
-                  '<input type="submit" value="' + aa + '" name="ff"/>\n'
-                                                        '</form>\n')
+            he.append('<form action="/my/" method="post">\n'
+                      '<input type="submit" value="' + aa + '" name="ff"/>\n'
+                                                            '</form>\n')
 
-    with open("templates/history_favorite.html", "w", encoding='utf-8') as outf:
-        outf.write(str(soup))
+        with open("templates/friends_favorite.html", "w", encoding='utf-8') as outf:
+            outf.write(str(soup))
 
-    with open("templates/history_favorite.html", encoding='utf-8') as f:
-        file = f.read()
-        file = file.replace("&lt;", "<")
-        file = file.replace("&gt;", ">")
-    with open("templates/history_favorite.html", "w", encoding='utf-8') as w:
-        w.write(file)
+        with open("templates/friends_favorite.html", encoding='utf-8') as f:
+            file = f.read()
+            file = file.replace("&lt;", "<")
+            file = file.replace("&gt;", ">")
+        with open("templates/friends_favorite.html", "w", encoding='utf-8') as w:
+            w.write(file)
+
+
+

@@ -102,17 +102,12 @@ def add_to_favorite(start_point='',end_point=''):
 
 @app.route('/sign-in-sign-up/', methods=['POST'])
 def signing_in():
-    print()
     btn = request.form['btn']
-    #sign_in.show_history_or_favorite(enum.favorite)
     global cur
     if btn == 'Войти':
         sign = sign_in.enter()
     else:
         return render_template('sign_up.html')
-
-
-
     if sign!=None:
         cur=sign
         return render_template('index.html')
@@ -122,7 +117,9 @@ def signing_in():
 
 @app.route('/registration/', methods=['POST'])
 def registration():
-    sign_up.registr()
+    global cur
+
+    cur = sign_up.registr()
     return render_template('index.html')
 
 @app.route('/your-friends/', methods=['POST'])
@@ -133,12 +130,11 @@ def your_friends():
         lol  = work_database.get_data_from_db_history_or_favorite(enum.favorite,str(i[1]))
         to_send.append(lol)
 
-        print()
+    if len(to_send)==0:
+        return render_template('index.html')
 
-    print()
-    print()
-
-
+    sub_window.show_friends_favorite(to_send)
+    return render_template('friends_favorite.html')
 
 
 if __name__ == '__main__':
